@@ -15,6 +15,7 @@ extension CommandLine
         case noArgument(_ definition: ArgumentDefinition)
     }
     
+    /// Parses the given `argumentString`whose default value is `CommandLine.arguments`
     static func parse<T: Argument>(_ argumentStrings: [String] = Self.arguments) throws -> [T]
     {
         let definitions = T.expectedDefinitions
@@ -25,10 +26,12 @@ extension CommandLine
         {
             let current = argumentStrings[i]
             
+            // find any argument definition that matches the current argument string
             if let definition = definitions.first(where: { $0.argName == current || $0.argShortName == current })
             {
                 var argument = T(definition: definition, value: nil)
                 
+                // grab the next argument string as value
                 let value = argumentStrings[safe: i + 1]
                 
                 if value == nil && definition.shouldHaveValue
@@ -37,6 +40,7 @@ extension CommandLine
                 }
                 else if definition.shouldHaveValue
                 {
+                    // consume the next argument string
                     argument.value = value
                     i += 1
                 }
@@ -47,6 +51,7 @@ extension CommandLine
             i += 1
         }
         
+        // check required definitions
         for definition in definitions
         {
             guard parsed.contains(where: { $0.definition.name == definition.name })
