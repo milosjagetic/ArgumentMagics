@@ -24,7 +24,9 @@ struct MyArgument: Argument
         static let sharelinkPassword = Self(name: "sharelink-password", shortName: "s", shouldHaveValue: true)
         static let environment = Self(name: "environment", shortName: "e", shouldHaveValue: true)
         static let printSharelinks = Self(name: "print-sharelinks", shortName: "l", shouldHaveValue: false)
-                
+//        static let bla = Self(name: "bla", shortName: "b", shouldHaveValue: false)
+//        static let nja = Self(name: "print-sharelinks", shortName: "l", shouldHaveValue: false)
+
         var name: String
         var shortName: String?
         var shouldHaveValue: Bool
